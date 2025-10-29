@@ -2,6 +2,12 @@ FROM php:7.4.1-apache-buster
 
 ENV VANILLA_VERSION 3.3
 
+# Point to the archived Debian mirrors because Buster is EOL.
+RUN sed -ri 's|deb.debian.org/debian|archive.debian.org/debian|g' /etc/apt/sources.list \
+  && sed -ri 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list \
+  && printf "Acquire::Check-Valid-Until \"false\";\nAcquire::AllowInsecureRepositories \"true\";\n" \
+    > /etc/apt/apt.conf.d/99debian-archive
+
 # Install system dependencies and php extensions
 RUN apt-get update \
   && apt-get install -y \
