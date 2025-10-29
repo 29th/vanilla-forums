@@ -33,5 +33,5 @@ jobs:
         envs: GITHUB_SHA
         script: |
           cd /usr/local/src
-          docker-compose pull forums
-          docker-compose up -d forums
+          docker compose pull forums
+          docker compose up -d forums
